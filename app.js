@@ -1,25 +1,23 @@
 const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+const app = express();
 require('dotenv').config();
 
-
-const indexRouter = require('./routes/index');
-
-const app = express();
-
 // Middlewares
-app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-// View engine (Jade)
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// Rotas
+const clientesRouter = require('./routes/clientes');
+const produtosRouter = require('./routes/produtos');
 
-app.use('/', indexRouter);
+app.use('/clientes', clientesRouter);
+app.use('/produtos', produtosRouter);
 
-module.exports = app;
+app.get('/', (req, res) => {
+    res.send('API rodando!');
+});
+
+// Servidor
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+});

@@ -22,7 +22,14 @@ exports.update = async (id, produto) => {
         'UPDATE produtos SET nome = ?, descricao = ?, preco = ?, data_atualizado = ? WHERE id = ?',
         [nome, descricao, preco, dataAtualizado, id]
     );
-    return { id, ...produto, data_atualizado: dataAtualizado };
+    return {
+        id: result.insertId,
+        nome: produto.nome,
+        descricao: produto.descricao,
+        preco: produto.preco,
+        data_atualizado: now
+    };
+    
 };
 
 exports.remove = async (id) => {

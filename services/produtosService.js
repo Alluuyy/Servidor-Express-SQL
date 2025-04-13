@@ -23,13 +23,12 @@ exports.update = async (id, produto) => {
         [nome, descricao, preco, dataAtualizado, id]
     );
     return {
-        id: result.insertId,
+        id: id,  
         nome: produto.nome,
         descricao: produto.descricao,
         preco: produto.preco,
-        data_atualizado: now
+        data_atualizado: dataAtualizado  
     };
-    
 };
 
 exports.remove = async (id) => {
